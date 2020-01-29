@@ -1,0 +1,8 @@
+.tmp
+.idea
+node_modules
+.swap
+*.log
+*.zip
+*.swp
+*.out

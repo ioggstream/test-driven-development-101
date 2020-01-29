@@ -1,0 +1,8 @@
+version: '3.0'
+services:
+  slides:
+    image: tommy4st/reveal-md
+    volumes:
+    - ./markdown:/usr/src/app:z
+
+
