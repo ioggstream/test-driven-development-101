@@ -136,3 +136,84 @@ And the test case
 ```
 
 Exercise: what can we do to gain 100% text coverage?
+
+
+---
+
+# Code quality
+
+Product quality is based on automatized processes and synchronized practices.
+Once upon a time all that work was done in synchronous meetings, with a long
+trail of discussions and blaming in case of issues.
+
+Automation reduces the space for discussions and just applies a set of
+ validation rules to human (and non/human) production.
+This has many  positive effects as it allows to apply continuous and
+ gradual changes, and avoids discussions. 
+Newcomers will eventually learn faster all development standards. 
+
+----
+
+## Linting
+
+To increase readability and reduce code variability, an important component
+in the development pipeline is linting and reformatting.
+
+Reformatting code reduces diff size, eases contribution and make easier to
+ contribute even for sporadic community members.
+
+----
+ 
+## Linting
+
+Linter rules should be defined in a specific file and should be useful to
+ achieve coding goals.
+ 
+Newer languages like Golang come with a linter with a predefined format
+, and other languages like python are following using "opinionated" linter
+ which reformats code with a very little possibility of customizations.
+ 
+Linting instruction should be in the pipeline and pull requests should fail
+ unless the linter/formatter says it's ok.
+
+----
+ 
+## Linting
+
+Let's see `black` configuration in [pyproject.toml](pyproject.toml)
+
+```python
+!cat pyproject.toml
+
+```
+
+Further formatting can be done, eg:
+
+- remove unused dependencies
+- sort dependencies
+- ...
+
+----
+
+## Meta-Linting
+
+While linting code is quite useful, we can do something more: lint software
+ configuration and metadata file.
+ 
+Linting metadata files allow us to check if all the compliance rules for
+ the project are set up, eg. we can check if `pyproject.toml` is correctly
+  configured or if the linter is called by the pipeline.
+  
+----
+
+## Meta-Linting
+
+A python tool for implementing a CI  is `tox` which is
+ configured via `tox.ini`. 
+
+Tox is simpler than maven, as packaging information are outside (in
+ pyproject.toml or in requirements.txt).
+ 
+```python
+!cat tox.ini
+```
