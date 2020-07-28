@@ -6,3 +6,12 @@ node_modules
 *.zip
 *.swp
 *.out
+.tox
+
+.git
+.coverace
+*.py[co]
+__pycache__
+*.egg-info
+*.egg
+.coverage
