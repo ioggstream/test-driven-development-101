@@ -217,3 +217,8 @@ Tox is simpler than maven, as packaging information are outside (in
 ```python
 !cat tox.ini
 ```
+
+Meta-linting can be very useful to ensure uniformity on catalogs, even
+ software catalogs.
+
+Specifications, pipeline and linting languages are thus very important.
