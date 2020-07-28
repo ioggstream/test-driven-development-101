@@ -30,6 +30,19 @@ A set of SaaS account:
 
 # Running the course
 
+## Notebooks
+
+Jupyter notebooks are produced from [markdown](markdown) files.
+The following script builds all into the `notebooks` folder.
+
+```
+bash -x build.sh 
+```
+
+Code is in [python](python) and will be loaded into slides via `%loadpy` jupyter macro.
+
+## Markdown
+
 To play the course, start the reveal-md server and point the browser to the given location.
 
 ```
