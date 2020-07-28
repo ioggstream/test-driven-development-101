@@ -1,5 +1,11 @@
 version: '3.0'
 services:
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile.course
+    volumes:
+    - .:/code
   slides:
     image: tommy4st/reveal-md
     volumes:

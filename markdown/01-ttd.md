@@ -56,6 +56,11 @@ test_maximum(my_input, expected_output)
 
 Now I just have to start coding until the test works.
 
+```python
+# Implement the `maximum` function here.
+
+
+```
 ----
 
 ## Advantages
@@ -100,4 +105,34 @@ Using a code-coverage tool you can ensure that even if you don't wrote unittest 
 Moreover you can use those tools to identify the uncovered parts, so that you can add more test cases or discover "dead" code parts.
 
 
+----
 
+## Code coverage in practice
+
+Let's see [coverage in action](/notebooks/notebooks/01-ttd.md.ipynb#Code-coverage-in-practice).
+
+```ipython
+
+!PYTHONPATH=$PWD pytest --cov=tdd_course tests/
+
+```
+
+Mumble: there are uncovered parts...
+
+----
+
+## Practice
+
+Show the function to test
+
+```ipython
+%loadpy tdd_course/utils.py
+```
+
+And the test case
+
+```ipython
+%loadpy tests/test_one.py
+```
+
+Exercise: what can we do to gain 100% text coverage?
