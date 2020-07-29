@@ -1,9 +1,9 @@
 openapi: 3.0.1
 info:
   version:  0.0.1
-  title: ciao
+  title: Maximum API
   description: |-
-    Do some math
+    Compute the maximum of a list of numbers.
 
 paths:
   /max:
@@ -18,7 +18,6 @@ paths:
               items:
                 type: integer
               minItems: 1
-              # example: []
       responses:
         '200':
            description: the maximum number

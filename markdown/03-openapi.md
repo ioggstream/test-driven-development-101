@@ -1,5 +1,8 @@
 # OpenAPI & Modeling
 
+Writing machine readable specification is a great way to prepare
+the ground for a testable project.
+
 ---
 
 ## [OpenAPI](https://www.openapis.org/) is a specification language
@@ -63,7 +66,8 @@ Writing the spec before the code, forces us to think about:
 
 ## OAS files compliance
 
-Lint spec example: the Italian API  [Online linter](https://teamdigitale.github.io/api-oas-checker?url=https://raw.githubusercontent.com/teamdigitale/api-starter-kit/master/openapi/simple.yaml.src)
+Lint spec example: the Italian API 
+[Online linter](https://teamdigitale.github.io/api-oas-checker?url=https://raw.githubusercontent.com/teamdigitale/api-starter-kit/master/openapi/simple.yaml.src)
 
 Rationale of the use of [Spectral]():
 
@@ -78,8 +82,74 @@ Rationale of the use of [Spectral]():
 We can integrate the linter via SaaS and add it to the Development Pipeline
 showing comments.
 
-[See example](https://github.com/teamdigitale/api-starter-kit-python/pull/5
-/files) 
+[See example](https://github.com/teamdigitale/api-starter-kit-python/pull/5/files) 
 
 Exercise: try to make a PR to that repo introducing a valid OAS3 statement
 which is not compliant with the ruleset.
+
+---
+
+## OAS & TDD
+
+Defining an OAS file full of examples enables us to test and improve the
+ interface.
+ 
+Consider the `maximum` function we wrote in [01-tdd.md.ipynb](01-tdd.md.ipynb)
+
+```python
+%loadpy tdd_course/utils.py
+```
+
+Let's write an OAS3 specification file based on the one present in the linter
+that wraps the `maximum` method.
+
+Write the examples in the input/output starting from the skeleton provided in
+
+```python
+%loadpy openapi.skel
+```
+
+and save it in `openapi.yaml`
+
+----
+
+Once we have the spec, we can bind them to the actual function `maximum
+` via the `operationId` property.
+
+It is done via
+
+```yaml
+...
+paths:
+  /max:
+    post:
+      operationId: tdd_course.utils.maximum
+...
+```
+
+Now try running your API in connexion.
+
+```bash
+connexion run openapi.yaml --port 9990 --debug
+```
+
+----
+
+We can use OAS to generate test data and do some smoking tests, for example.
+
+`schemathesis` is a tool that enable us to do this.
+
+```bash
+
+schemathesis  run http://0.0.0.0:9990/openapi.yaml -c all
+
+```
+
+Schemathesis helps us in refining schemas *after the first implementation*.
+
+---
+
+# API Design Workshop
+
+Now we will 
+
