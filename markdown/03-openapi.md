@@ -137,6 +137,9 @@ We can use OAS to generate test data and do some smoking tests, for example.
 `schemathesis` is a tool that enable us to do this.
 
 ```bash
+
 schemathesis  run http://0.0.0.0:9990/openapi.yaml -c all
 
 ```
+
+Schemathesis helps us in refining schemas *after the first implementation*.
