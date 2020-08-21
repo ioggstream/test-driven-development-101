@@ -1,14 +1,12 @@
 # Test Driven Development 101
 
-
-
 ---
 
 
 ## Goal
 
   - Design an API with testing in mind
-  
+    
 ---
 
 # REST and RPC
@@ -115,14 +113,14 @@ There are two paths for API writing:
   and then uses some tool to generate the
   IDL. An example function generating the above IDL could be
   
-  ```
-  def echo():
-      item = {"hello": "world"}
-      status_code = 200
-      headers = {'content-type': 'application/json'}
-      
-      return item, status_code, headers
-  ```
+```python
+def echo():
+  item = {"hello": "world"}
+  status_code = 200
+  headers = {'content-type': 'application/json'}
+  
+  return item, status_code, headers
+```
   
 - contract first: one writes down the interface in an IDL,
  then let the tools generate the code stubs.
@@ -131,7 +129,7 @@ There are two paths for API writing:
 
 ## Contract first improves standardization
 
-While lazy developers prefers to use code-first, 
+While lazy developers prefer to use code-first, 
 as they could focus on writing the actual code and leave 
 the interface as an underproduct, 
 this approach rarely works in a large ecosystem where
@@ -148,7 +146,7 @@ A contract-first approach has many advantages:
   being entangled by implementation details;
 - it's independent from which framework or language people uses
   for its client/server implementation and from how frameworks generate the
-  02-api-design.mdspecs (which may be buggy);
+  specs (which may be buggy);
 
 Focusing on the specs allows to create *API modeling iterations* that enable
 the API to change fast and involve stakeholders in the modeling and in the 

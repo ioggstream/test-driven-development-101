@@ -11,7 +11,7 @@ def parse_line(line: str):
     """
     @solution
     """
-    re_line = "(" "\[[^\]]+\]" "|" '"[^"]+"' "|" "[^ ]+" ")"
+    re_line = "(" r"\[[^\]]+\]" "|" '"[^"]+"' "|" "[^ ]+" ")"
     ip, _, _, date, request, *_ = findall(re_line, line)
     return ip, date[1:-1], request.strip('"')
 
@@ -22,27 +22,30 @@ def test_parse_line():
     assert request == "GET /administrator/ HTTP/1.1"
 
 
-def parse_list(lines: list):
+def parse_list(lines: list, http_method: str) -> int:
     """
 
     :param lines:
     :return:
-    @solution
+    @ignore
     """
+    counter = 0
 
     for l in lines:
-        yield parse_line(l)
+        if not l.strip():
+            continue
+        _, _, request = parse_line(l)
+        counter += request.startswith(http_method)
+    return counter
 
 
 def test_parse_list():
-    counter = 0
-    fpath = Path("access.log")
-    with fpath.open() as fh:
-        for l in fh.readlines():
-            if not l.strip():
-                continue
-            _, _, request = parse_line(l)
-            counter += request.startswith("GET")
+    """
+    @ignore because it can be part of a solution.
+    :return:
+    """
+    lines = Path("access.log").read_text().splitlines()
+    counter = parse_list(lines, "GET")
     assert counter == 21
 
 
@@ -51,14 +54,17 @@ def test_main():
     assert main(fpath, "GET") == 21
 
 
-def main(fpath, http_method):
+def main(fpath: str, http_method: str) -> int:
     """Count the occurrences of http_method in access.log.
         
         param: fpath - a posix path
         param: http_method - an http method
         return: an integer with the number of occurrencies
+        @solution
     """
-    raise NotImplementedError
+    fpath = Path("access.log")
+    with fpath.open() as fh:
+        return parse_list(fh.readlines(), http_method)
 
 
 # This part will be run only when
