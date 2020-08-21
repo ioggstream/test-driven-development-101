@@ -13,13 +13,10 @@
 
 # Test Driven Development
 
-1- define and clarify one user requirement
-
-2- write down some examples with the inputs and the expected outputs
-
-3- write the code testing for the expected behavior
-
-4- implement the code
+  - define and clarify one user requirement
+  - write down some examples with the inputs and the expected outputs
+  - write the code testing for the expected behavior
+  - implement the code
 
 ----
 
@@ -96,13 +93,42 @@ This improves design significantly!
 
 ## Running tests with python
 
-`tox` is a python tool that can invoke pytest, a common framework for running
- python tests.
-You can find a minimal test file in the python directory
+Here is a minimal python file with a test
+
+```python
+%load ex-01/test_minimal.py
+```
+
+Use the [terminal](/terminals/1) to run the following command:
+
+```bash
+# run pytest with verbose
+pytest -v ex-01/test_minimal.py
+
+```
+----
+
+Exercise: 
+
+ - fix the first test 
+ - add one more failing tests
+
+```python
+def test_fail():
+    assert 1 == 0  # This is supposed to fail
+```
+
+----
+
+To run tests in an isolated environment you can use `tox`.
+
+It  can invoke pytest, a framework for running python tests.
+You can find a minimal test file in the python directory. Try to run it
+in a [terminal](/terminals/1)
 
 ```bash
 cd python/
-tox -e py37
+tox -v -e py37
 cd ..
 ```
 
@@ -113,16 +139,30 @@ Exercise:
 
 ----
 
+## Running tests with python
+
+While tox run tests in an isolated environment, we want to install
+on the course machine some python tools.
+Python packages can be installed via the `pip3` package manager.
+
+Use the [terminal](/terminals/1) to see the output in real time.
+
+```bash
+# Note the --user flag to avoid system-wide installation.
+pip3 install pytest black isort yamllint --user
+```
+
+----
+
 ## Running tests with java
 
 `maven` provides a goal for running tests and invoke junit.
-Let's try this nice junit5 tutorial repo!
+Let's try with this nice junit5 tutorial repo in a [terminal](/terminals/1)
 
 ```bash
 git clone https://github.com/junit-team/junit5-workshop
 cd junit5-workshop
 mvn -e test
-cd ..
 ```
 
 Exercises:
@@ -150,7 +190,8 @@ An acceptable code coverage starts at 88-90%
 
 Using a code-coverage tool you can ensure that even if you don't wrote
  unittest for all functions, that code is still stressed.
-Moreover you can use those tools to identify the uncovered parts, so that you can add more test cases or discover "dead" code parts.
+Moreover you can use those tools to identify the uncovered parts,
+so that you can add more test cases or discover "dead" code parts.
 
 
 ----
@@ -202,10 +243,13 @@ Newcomers will eventually learn faster all development standards.
 
 ----
 
-## Linting
+## Static analysis
 
 To increase readability and reduce code variability, an important component
-in the development pipeline is linting and reformatting.
+in the development pipeline is static code analysis.
+
+It includes syntax checks, linting and reformatting, identification of
+ dangerous patterns like cleartext passwords or clumsy code.
 
 Reformatting code reduces diff size, eases contribution and make easier to
  contribute even for sporadic community members.
@@ -221,14 +265,36 @@ Newer languages like Golang come with a linter with a predefined format
 , and other languages like python are following using "opinionated" linter
  which reformats code with a very little possibility of customizations.
  
-Linting instruction should be in the pipeline and pull requests should fail
- unless the linter/formatter says it's ok.
+Linting requirements should be part of the project description and be
+ checked before the build phase.
 
 ----
  
+A CI pipeline and the associated pull requests should fail unless
+the linter/formatter says it's ok.
+
+We can lint xml and yaml files using proper tools like `xmllint` and `yamllint`.
+
+Exercise: 
+
+- reformat the following code with xmllint
+
+```xml
+<a><b foo="bar"
+buz="lar"
+>ciao</b></a>
+``` 
+
+```bash
+xmllint --format # complete the command
+```
+
+----
+
 ## Linting with python
 
-Let's see `black` configuration in [pyproject.toml](pyproject.toml)
+`black` is a linter and formatter for python.
+Let's see its configuration in [pyproject.toml](pyproject.toml)
 
 ```python
 !cat pyproject.toml
@@ -252,6 +318,8 @@ Linting metadata files allow us to check if all the compliance rules for
  the project are set up, eg. we can check if `pyproject.toml` is correctly
   configured or if the linter is called by the pipeline.
   
+Example: you can use the `yamllint` tool to 
+
 ----
 
 ## Linting metadata files
@@ -286,6 +354,8 @@ java -jar /path/to/google-java-format-1.8-all-deps.jar --set-exit-if-changed
 Exercise:
 1- git clone https://github.com/caldav4j/caldav4j
 2- play with google-java-format on its files
+
+----
 
 ## Linting with java
 

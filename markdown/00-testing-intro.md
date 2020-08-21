@@ -12,6 +12,15 @@
   - Create a Continuous Integration pipeline using cloud tools
   - Test every development phase and replace mocks with containerized components
 
+----
+
+## Prerequisites
+
+  - git, see [git-101](https://github.com/ioggstream/python-course/blob/master/git-101)
+  - docker, docker-compose
+  - java and/or python development
+  - maven
+  
 ---
 
 # Software development lifecycle
@@ -77,7 +86,7 @@ Tools like maven give you control over the SDL and enforce a common workflow for
 
 ## Tools
 
-While maven is tied to a very specific language, in the recent years more tools have emerged: some to replace maven (eg. gradle, ...) others to integrate its functionalities in a more general environment.
+While maven is tied to a specific language, in the recent years more tools have emerged: some to replace maven (eg. gradle, ...) others to integrate its functionalities in a more general environment.
 
 The install phase which includes integration tests usually needed to spin up other machine or deploy packages on a testing environment, and drive all thos tasks from a java configuration file is very difficult.
 
@@ -91,8 +100,25 @@ Maven projects use one single fine: the Project Object Model defining everything
 
 Newer and more diverse environment working with different languages may use different files instead, eg:
 
-- maven or other packagign tool for the actual assembly of the project (pom.xml, pyproject.toml, package.json, Makefile, ...)
+- maven, distutils or other packaging tool for the actual assembly of the
+ project (pom.xml, pyproject.toml, package.json, Makefile, ...)
 - one or more CI configuration file (eg. circleci.yaml, travis.yml, jenkins-job.xml, ..) where each yaml file can run  one or more different jobs (eg. linting, static analysis, compile, document generation,..)
+
+----
+
+## Tools
+
+In this course we will focus on two project management tool:
+ `tox` for python, `maven` for java.
+ 
+Maven accomplishes its goals via different plugins (eg. junit, sonarqube).
+
+Tox can be used to script out and invoke python programs for each SDL phase,
+eg:
+
+- poetry for dependency management
+- pytest for running tests
+- setuptools for assembling and distributing a package
 
 ---
 
@@ -114,11 +140,16 @@ Does the software:
 Old develompent model were based on long cycles where
 issues were discovered too late.
 
-Technological improvements allowed to shorten development phases and lowered the QA costs.
+Technological improvements allowed to shorten development phases
+and lowered the QA costs.
 
-This give rise to continuous integration (CI): the practice of merging all developers' working copies to a shared mainline several times a day.
+This give rise to continuous integration (CI):
+ the practice of merging all developers' working copies to a 
+ shared mainline several times a day.
 
-To succesfully merge working copies in an efficient way, we need a strategy to continuously test that the changes won't break the product.
+To succesfully merge working copies in an efficient way,
+ we need a strategy to continuously test 
+ that the changes won't break the product.
 
 ----
 

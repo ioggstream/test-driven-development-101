@@ -1,5 +1,8 @@
 # OpenAPI & Modeling
 
+Writing machine readable specification is a great way to prepare
+the ground for a testable project.
+
 ---
 
 ## [OpenAPI](https://www.openapis.org/) is a specification language
@@ -143,3 +146,10 @@ schemathesis  run http://0.0.0.0:9990/openapi.yaml -c all
 ```
 
 Schemathesis helps us in refining schemas *after the first implementation*.
+
+---
+
+# API Design Workshop
+
+Now we will 
+
