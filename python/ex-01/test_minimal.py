@@ -6,6 +6,7 @@ pytest .
 
 """
 
+
 def maximum(l: list):
     """Fix this test, eg. using
         return max()
