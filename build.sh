@@ -1,4 +1,5 @@
 #!/usr/bin/bash
+set -x
 
 (cd markdown;
 
@@ -8,3 +9,7 @@ done
 )
 
 rsync -var python/* notebooks/
+
+(cd notebooks;
+make
+)

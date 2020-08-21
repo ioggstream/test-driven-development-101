@@ -148,7 +148,7 @@ A contract-first approach has many advantages:
   being entangled by implementation details;
 - it's independent from which framework or language people uses
   for its client/server implementation and from how frameworks generate the
-  02-api-design.mdspecs (which may be buggy);
+  specs (which may be buggy);
 
 Focusing on the specs allows to create *API modeling iterations* that enable
 the API to change fast and involve stakeholders in the modeling and in the 
