@@ -93,6 +93,19 @@ This improves design significantly!
 
 ## Running tests with python
 
+Let's install on the course machine some python testing packages
+ via the `pip3` package manager.
+
+Use the [terminal](/terminals/1) to see the output in real time.
+
+```bash
+# Note the --user flag to avoid system-wide installation.
+pip3 install pytest black isort yamllint --user
+```
+
+
+## Running tests with python
+
 Here is a minimal python file with a test
 
 ```python
@@ -120,37 +133,26 @@ def test_fail():
 
 ----
 
-To run tests in an isolated environment you can use `tox`.
-
-It  can invoke pytest, a framework for running python tests.
-You can find a minimal test file in the python directory. Try to run it
-in a [terminal](/terminals/1)
-
-```bash
-cd python/
-tox -v -e py37
-cd ..
-```
-
-Exercise:
-
-- see the example test case `python/tests/test_one.py`
-- brief discussion on tox and pytest
-
-----
-
-## Running tests with python
-
-While tox run tests in an isolated environment, we want to install
-on the course machine some python tools.
-Python packages can be installed via the `pip3` package manager.
-
-Use the [terminal](/terminals/1) to see the output in real time.
+To run tests in an isolated environment you can use `tox`, which:
+- declares the python version
+- installs dependencies
+- runs pytest
 
 ```bash
-# Note the --user flag to avoid system-wide installation.
-pip3 install pytest black isort yamllint --user
+cat ex-01/tox.ini
 ```
+
+We can configure tox to do further stuff, like we do with maven.
+
+Exercise: 
+
+  - run tox in [terminal](/terminals/1)
+
+```bash
+tox -v
+```
+
+  - brief discussion on tox and pytest
 
 ----
 
@@ -169,6 +171,16 @@ Exercises:
  - check the relevant parts in pom.xml
  - have a look at the [slides](https://codefx-org.github.io/talk-junit-5/#/_basics)
  
+----
+
+## Test Practice
+
+Implement a simple parser in python:
+
+- the program parses [access.log](ex-01/access.log)
+- returns the number of occurrencies of an HTTP method (eg. POST, GET, ..)
+
+
 ---
 
 # What to test
