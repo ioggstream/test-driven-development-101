@@ -113,14 +113,14 @@ There are two paths for API writing:
   and then uses some tool to generate the
   IDL. An example function generating the above IDL could be
   
-  ```
-  def echo():
-      item = {"hello": "world"}
-      status_code = 200
-      headers = {'content-type': 'application/json'}
-      
-      return item, status_code, headers
-  ```
+```python
+def echo():
+  item = {"hello": "world"}
+  status_code = 200
+  headers = {'content-type': 'application/json'}
+  
+  return item, status_code, headers
+```
   
 - contract first: one writes down the interface in an IDL,
  then let the tools generate the code stubs.

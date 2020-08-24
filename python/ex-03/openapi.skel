@@ -1,0 +1,34 @@
+openapi: 3.0.1
+info:
+  version:  0.0.1
+  title: Maximum API
+  description: |-
+    Compute the maximum of a list of numbers.
+ 
+    Items are passed as a json object.
+
+paths:
+  /maximum:
+    post:
+      operationId: api.maximum
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: numbers
+              properties:
+                numbers:
+                  type: array
+                  items:
+                    type: integer
+                  minItems: 1
+      responses:
+        '200':
+           description: the maximum number
+           content:
+             application/json:
+               schema:
+                 properties:
+                   maximum:
+                     type: integer
+

@@ -75,25 +75,22 @@ In OAS3 we should first describe api metadata, to clarify:
 
 Here's a simple OAS3 metadata part, contained in the `info` section.
 
-```
+```yaml
 openapi: 3.0.0
 info:
   version: "1.0.0"
-  title: |-
-    Write a short, clear name of your service.
+  title: A short, clear name of your service.
   description: |
     This field may contain the markdown documentation of the api,
     including references to other docs and examples.
 
-  # Legal references and terms of services.
-  termsOfService: 'http://swagger.io/terms/'
+  termsOfService: 'http://swagger.io/terms/'    # Legal references and terms of services.
   contact:
     email: robipolli@gmail.com
     name: Roberto Polli
     url: https://twitter.com/ioggstream
   license:
     name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 ```
 
 ----
@@ -102,7 +99,7 @@ Starting from this skeleton file, we will complete an OAS file
 using [swagger editor](https://editor.swagger.io).
 
 ```yaml
-# Complete this file with the required informations
+# Complete this file with the required information
 #  using your swagger-editor. You should 
 # - fix all the eventual error
 # - add the missing parameters
@@ -115,12 +112,11 @@ components: {}
 
 ```
 
-1- provide contact informations and terms of services
+1- provide contact information and terms of services
 
 ----
 
-In `components.schemas` you can define object schemas. The schema for the
- following object 
+In `components.schemas` you can define object schemas. This object
  
 ```json
 {
@@ -130,7 +126,7 @@ In `components.schemas` you can define object schemas. The schema for the
 }
 ```
 
-is
+has the following schema
 
 ```yaml
 components:
@@ -157,6 +153,8 @@ Esercise: define the `ISOTimestamp` schema to represent the following object
 ```json
 {"timestamp":  "2020-01-01T00:00:00Z"}
 ```
+
+and add it to the datetime.yaml file in swagger editor.
 
 ----
 
@@ -198,14 +196,14 @@ paths:
 
 Exercise: describe the `/echo` path:
  
- 1- it returns a `200` response
- 2- the response media-type is `application/json`
- 3- it contains an `ISOTimestamp` object with the current timestamp
- 4- in case of error, returns a `Problem` object.
+  - it returns a `200` response
+  - the response media-type is `application/json`
+  - it contains an `ISOTimestamp` object with the current timestamp
+  - in case of error, returns a `Problem` object.
  
 ---
 
-## OAS files compliance
+# OAS files compliance
 
 Writing the spec before the code, forces us to think about:
 
@@ -246,7 +244,7 @@ Practice:
 
 - compare `datetime.yaml` to [this one](https://raw.githubusercontent.com/teamdigitale/api-starter-kit/master/openapi/simple.yaml.src)
 - add a couple of examples to `datetime.yaml`
-- open a [terminal](terminals/1) and run a mock API server
+- open a [terminal](/terminals/1) and run a mock API server
 
 ```bash
 connexion run datetime.yaml --mock=all & 
@@ -256,10 +254,14 @@ connexion run datetime.yaml --mock=all &
 
 ```bash
 curl -v http://localhost/datetime/v1/echo
+curl -v http://localhost/datetime/v1/status
 ```
+
+- finally stop the server (Eg. with `fg` and `CTRL+C`).
+
 ----
 
-## OAS file compliance
+## OAS file compliance [CUT]
 
 We can integrate the linter via SaaS and add it to the Development Pipeline
 showing comments.
@@ -271,48 +273,120 @@ which is not compliant with the ruleset.
 
 ---
 
-## OAS & TDD
+# OAS & TDD
 
-Defining an OAS file full of examples enables us to test and improve the
- interface.
+Providing examples in an OAS file enables us to test and
+ improve the interface.
  
-Consider the `maximum` function we wrote in [01-tdd.md.ipynb](01-tdd.md.ipynb)
+Let's write `openapi.yaml`, an OAS spec describing an API which:
 
-```python
-%loadpy tdd_course/utils.py
-```
+- receives from the client a list of numbers;
+- returns the maximum in the response.
 
-Let's write an OAS3 specification file based on the one present in the linter
-that wraps the `maximum` method.
-
-Write the examples in the input/output starting from the skeleton provided in
+Add some examples in the input/output starting from the skeleton provided in
 
 ```python
 %loadpy openapi.skel
 ```
 
-and save it in `openapi.yaml`
+Hint: use [swagger editor](editor.swagger.io)
 
 ----
 
-Once we have the spec, we can bind them to the actual function `maximum
-` via the `operationId` property.
+Exercise:
 
-It is done via
+  - lint the spec with spectral and with 
+    [api-oas-checker](teamdigitale.github.io/api-oas-checker)
+    
+  - use yamllint to cleanup the yaml syntax.
+    
+  - Mock the server  [in a terminal](/terminals/1) using 
+  
+```bash
+connexion run --mock=all openapi.yaml
+```
+  
+----
+
+## API Mocking
+
+API mocking is important to provide feedback to users during the design
+phase.
+
+Using connexion --mock=all we allow our consumer (clients) to test
+our API design so that we can get feedback and improve before spending
+time in the actual development.
+
+Connexion can mock either all methods or only unimplemented methods.
+
+----
+
+`Stoplight Prism` is another framework for mocking APIs.
+
+Prism generates fake data on every response according to the examples
+provided in the OAS spec.
+
+See [Prism guide](https://github.com/stoplightio/prism/blob/master/docs/guides/01-mocking.md#Response-Generation)
+  
+Exercise: run prism on your openapi.yaml using docker
+
+```python
+docker run --rm -v $PWD:/code stoplight/prism mock /code/openapi.yaml
+```
+
+Now use the [terminal](/terminal/1) to issue some request.
+
+  
+---
+
+## Implementing the API
+
+Implementing an API PoC is very useful for testing the specification.
+
+Python is a convenient language for prototyping and mocking:
+let's see how we can use it to 
+ bind the spec to a real `maximum` function
+ via the `operationId` OAS property.
 
 ```yaml
 ...
 paths:
-  /max:
+  /maximum:
     post:
-      operationId: tdd_course.utils.maximum
+      operationId: api.get_maximum
 ...
 ```
 
-Now try running your API in connexion.
+----
+
+Now implement the `get_maximum()` function using TDD:
+
+- implement `maximum`
+- implement `test_get_maximum`
+- implement `get_maximum`
+- run
+
+```bash
+pytest api.py -v
+```
+
+----
+
+
+Now run your API [in a terminal](/terminals/1)
 
 ```bash
 connexion run openapi.yaml --port 9990 --debug
+```
+
+And issue some requests via jupyter
+
+```python
+from requests import request
+url = "http://localhost:5000/maximum"
+data = {"numbers": [1,2,3,4,5]}
+r = request("POST", url,  json=data)
+r.json()
 ```
 
 ----

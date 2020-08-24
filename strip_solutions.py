@@ -44,7 +44,7 @@ def _eligible(code, pattern):
     return source.startswith('"""') and pattern in source
 
 
-def process_ast(code, skip_pattern=""):
+def process_ast(code, skip_pattern=None):
     rs = ast.parse("raise NotImplementedError")
     ignored = [
         f for f in code.body if hasattr(f, "body") and _eligible(f.body[0], "@ignore")
@@ -54,7 +54,7 @@ def process_ast(code, skip_pattern=""):
         if f.__class__ != ast.FunctionDef:
             continue
 
-        if f.name.startswith(skip_pattern):
+        if skip_pattern and f.name.startswith(skip_pattern):
             continue
 
         if not _eligible(f.body[0], "@solution"):
@@ -68,26 +68,37 @@ def process_ast(code, skip_pattern=""):
     return code
 
 
-def process_file(fpath, skip_pattern=""):
+def process_file(fpath, skip_pattern=None, destdir=None, replace=False):
     log.info("Process %r %r", fpath, skip_pattern)
     code = ast.parse(Path(fpath).read_text())
 
     new_code = process_ast(code, skip_pattern)
+    if destdir:
+        dpath = Path(destdir) / Path(fpath).name
+    elif replace:
+        dpath = Path(fpath)
+    else:
+        dpath = Path(fpath + "ex.py")
 
-    Path(fpath + ".ex.py").write_text(astor.to_source(new_code))
+    if dpath.exists() and not replace:
+        raise SystemError("File already exists: ", dpath)
+    dpath.write_text(astor.to_source(new_code))
 
 
 @click.command()
 @click.argument("files", nargs=-1)
 @click.option("--skip-pattern", default="", help="Skip functions starting with")
-def main(files, skip_pattern=""):
+@click.option("--destdir", default=False, help="destination directory")
+@click.option("--replace", default=False, help="replace the current file")
+def main(files, skip_pattern="", destdir=None, replace=False):
     """Replace function code with 
        raise NotImplementedError("Write me")
        for python exercises.
     """
-
+    if destdir:
+        Path(destdir).mkdir(exist_ok=True, parents=True)
     for fpath in files:
-        process_file(fpath, skip_pattern)
+        process_file(fpath, skip_pattern, destdir, replace)
 
 
 if __name__ == "__main__":
