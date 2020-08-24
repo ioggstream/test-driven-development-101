@@ -1,14 +1,12 @@
 # Test Driven Development 101
 
-
-
 ---
 
 
 ## Goal
 
   - Design an API with testing in mind
-  
+    
 ---
 
 # REST and RPC
@@ -131,7 +129,7 @@ There are two paths for API writing:
 
 ## Contract first improves standardization
 
-While lazy developers prefers to use code-first, 
+While lazy developers prefer to use code-first, 
 as they could focus on writing the actual code and leave 
 the interface as an underproduct, 
 this approach rarely works in a large ecosystem where
