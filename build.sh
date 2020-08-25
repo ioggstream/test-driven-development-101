@@ -1,17 +1,10 @@
 #!/usr/bin/bash
 set -x
 
-(cd markdown;
-
-for f in *.md; do
-	notedown $f > ../notebooks/$f.ipynb
-done
-)
+# Make notebook + slides
+(cd markdown; make -j4 all)
 
 rsync -var python/* notebooks/
 
-find notebooks/ -type f -name \*.py --maxdepth=2 -exec python strip_solutions.py --replace {}
+find notebooks/ -name \*.py -a ! -path '*/.tox/*' -type f  -exec python strip_solutions.py --replace {} \;
 
-(cd notebooks;
-make
-)

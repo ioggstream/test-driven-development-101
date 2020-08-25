@@ -87,10 +87,9 @@ def process_file(fpath, skip_pattern=None, destdir=None, replace=False):
 
 @click.command()
 @click.argument("files", nargs=-1)
-@click.option("--skip-pattern", default="", help="Skip functions starting with")
 @click.option("--destdir", default=False, help="destination directory")
 @click.option("--replace", default=False, help="replace the current file")
-def main(files, skip_pattern="", destdir=None, replace=False):
+def main(files, destdir=None, replace=False):
     """Replace function code with 
        raise NotImplementedError("Write me")
        for python exercises.
@@ -98,7 +97,7 @@ def main(files, skip_pattern="", destdir=None, replace=False):
     if destdir:
         Path(destdir).mkdir(exist_ok=True, parents=True)
     for fpath in files:
-        process_file(fpath, skip_pattern, destdir, replace)
+        process_file(fpath, destdir=destdir, replace=replace)
 
 
 if __name__ == "__main__":

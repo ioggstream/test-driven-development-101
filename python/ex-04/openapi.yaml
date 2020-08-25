@@ -10,9 +10,13 @@ paths:
     post:
       operationId: api.get_maximum
       requestBody:
+        required: true
         content:
           application/json:
             schema:
+              type: object
+              required:
+              - numbers
               properties:
                 numbers:
                   type: array
@@ -25,5 +29,9 @@ paths:
            content:
              application/json:
                schema:
-                 type: integer
+                 required:
+                 - maximum
+                 properties:
+                   maximum:
+                     type: integer
 

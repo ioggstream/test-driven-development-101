@@ -1,17 +1,13 @@
 SOURCES=$(wildcard *.md)
-NB=$(addsuffix .ipynb, $(SOURCES))
-NB1=$(addprefix ../notebooks/, $(NB))
-SLIDES=$(addsuffix .slides.html, $(SOURCES))
+NB=$(addprefix ../notebooks/, $(addsuffix .ipynb, $(SOURCES)))
+SLIDES=$(addprefix ../slides/, $(addsuffix .slides.html, $(SOURCES)))
 
 ../notebooks/%.md.ipynb: %.md
 	notedown $<  > $@
 
-%.md.ipynb: %.md
-	notedown $(basename $<).md > $@
 
-
-%.slides.html: %.ipynb
-	jupyter nbconvert $< --to slides
+../slides/%.slides.html: ../notebooks/%.ipynb
+	jupyter nbconvert $< --execute --to slides --output $@
 
 
 nb: $(NB)
@@ -25,7 +21,5 @@ slides: $(SLIDES)
 	echo $(SLIDES)
 
 
-all: slides
+all: nb slides
 
-nb1: $(NB1)
-	echo $(NB1)
