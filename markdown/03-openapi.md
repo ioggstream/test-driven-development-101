@@ -330,7 +330,7 @@ See [Prism guide](https://github.com/stoplightio/prism/blob/master/docs/guides/0
   
 Exercise: run prism on your openapi.yaml using docker
 
-```python
+```bash
 docker run --rm -v $PWD:/code stoplight/prism mock /code/openapi.yaml
 ```
 
@@ -364,14 +364,13 @@ Now implement the `get_maximum()` function using TDD:
 - implement `maximum`
 - implement `test_get_maximum`
 - implement `get_maximum`
-- run
+- test them:
 
 ```bash
-pytest api.py -v
+pytest -v api.py
 ```
 
 ----
-
 
 Now run your API [in a terminal](/terminals/1)
 
@@ -379,7 +378,7 @@ Now run your API [in a terminal](/terminals/1)
 connexion run openapi.yaml --port 9990 --debug
 ```
 
-And issue some requests via jupyter
+And issue some requests using the cell below.
 
 ```python
 from requests import request
@@ -391,14 +390,12 @@ r.json()
 
 ----
 
-We can use OAS to generate test data and do some smoking tests, for example.
+[connexion] and [prism] mock the server
 
-`schemathesis` is a tool that enable us to do this.
+other OAS tools like [schemathesis] can mock client and generate test requests
 
 ```bash
-
 schemathesis  run http://0.0.0.0:9990/openapi.yaml -c all
-
 ```
 
 Schemathesis helps us in refining schemas *after the first implementation*.
@@ -409,3 +406,8 @@ Schemathesis helps us in refining schemas *after the first implementation*.
 
 Now we will 
 
+[//]: #  (Riferimenti)
+
+[connexion]: https://github.com/zalando/connexion
+[spectral]: https://github.com/stoplight/spectral
+[prism]: https://github.com/stoplight/prism
