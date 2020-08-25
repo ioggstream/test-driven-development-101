@@ -70,6 +70,14 @@ Currently all those steps were named:
 
 ----
 
+An example pipeline for the [caldav4j] project
+
+![caldav](images/circleci-pipeline.png)
+
+
+
+----
+
 ## Tools
 
 To ease this tasks there are many tools. The Java world traditional tool is `maven`

@@ -1,7 +1,9 @@
 # Test Driven Development 101
 
 
-
+```python
+cd ex-01
+```
 ---
 
 
@@ -109,14 +111,14 @@ pip3 install pytest black isort yamllint --user
 Here is a minimal python file with a test
 
 ```python
-%load ex-01/test_minimal.py
+%load test_minimal.py
 ```
 
 Use the [terminal](/terminals/1) to run the following command:
 
 ```bash
 # run pytest with verbose
-pytest -v ex-01/test_minimal.py
+pytest -v test_minimal.py
 
 ```
 ----
@@ -139,7 +141,7 @@ To run tests in an isolated environment you can use `tox`, which:
 - runs pytest
 
 ```bash
-cat ex-01/tox.ini
+cat tox.ini
 ```
 
 We can configure tox to do further stuff, like we do with maven.
@@ -210,34 +212,26 @@ so that you can add more test cases or discover "dead" code parts.
 
 ## Code coverage in practice
 
-Let's see [coverage in action](/notebooks/notebooks/01-ttd.md.ipynb#Code-coverage-in-practice).
+Let's see [coverage in action](https://pytest-cov.readthedocs.io/en/latest/reporting.html)
+on [test_minimal.py](/edit/notebooks/ex-01/test_minimal.py).
 
-```ipython
-
-!PYTHONPATH=$PWD pytest --cov=tdd_course tests/
-
+```bash
+pytest --cov-report term-missing test_minimal.py
 ```
 
-Mumble: there are uncovered parts...
+Mumble: Are uncovered parts?
 
 ----
 
 ## Practice
 
-Show the function to test
+Show the function to test (`maximum`) and its test...
 
 ```ipython
-%loadpy tdd_course/utils.py
-```
-
-And the test case
-
-```ipython
-%loadpy tests/test_one.py
+%loadpy test_minimal.py
 ```
 
 Exercise: what can we do to gain 100% text coverage?
-
 
 ---
 
@@ -295,7 +289,8 @@ Exercise:
 <a><b foo="bar"
 buz="lar"
 >ciao</b></a>
-``` 
+```
+
 
 ```bash
 xmllint --format # complete the command
@@ -364,8 +359,9 @@ java -jar /path/to/google-java-format-1.8-all-deps.jar --set-exit-if-changed
 ```
 
 Exercise:
-1- git clone https://github.com/caldav4j/caldav4j
-2- play with google-java-format on its files
+
+1. git clone https://github.com/caldav4j/caldav4j
+2. play with google-java-format on its files
 
 ----
 
@@ -375,7 +371,8 @@ The typical java workflow is to add a linting step (goal) in the project
  descriptor `pom.xml` [see this PR](https://github.com/caldav4j/caldav4j/pull/127/files)
  
 ```xml
-... in <plugins>
+
+<!-- ... in <plugins> -->
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
@@ -390,5 +387,5 @@ The typical java workflow is to add a linting step (goal) in the project
           </java>
         </configuration>
       </plugin>
-...
 ```
+

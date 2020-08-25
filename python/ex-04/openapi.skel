@@ -21,7 +21,6 @@ paths:
                   type: array
                   items:
                     type: integer
-                  minItems: 1
       responses:
         '200':
            description: the maximum number

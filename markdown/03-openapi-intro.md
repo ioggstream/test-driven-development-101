@@ -9,6 +9,11 @@
  - Using static linters (swagger.editor.io, spectral, ..)
  - Validating spec with tools.
  
+## Tools
+
+  - swagger editor, connexion
+  - docker
+  
 ---
 
 # Writing Specification
@@ -83,7 +88,6 @@ info:
   description: |
     This field may contain the markdown documentation of the api,
     including references to other docs and examples.
-
   termsOfService: 'http://swagger.io/terms/'    # Legal references and terms of services.
   contact:
     email: robipolli@gmail.com
@@ -273,141 +277,3 @@ which is not compliant with the ruleset.
 
 ---
 
-# OAS & TDD
-
-Providing examples in an OAS file enables us to test and
- improve the interface.
- 
-Let's write `openapi.yaml`, an OAS spec describing an API which:
-
-- receives from the client a list of numbers;
-- returns the maximum in the response.
-
-Add some examples in the input/output starting from the skeleton provided in
-
-```python
-%loadpy openapi.skel
-```
-
-Hint: use [swagger editor](editor.swagger.io)
-
-----
-
-Exercise:
-
-  - lint the spec with spectral and with 
-    [api-oas-checker](teamdigitale.github.io/api-oas-checker)
-    
-  - use yamllint to cleanup the yaml syntax.
-    
-  - Mock the server  [in a terminal](/terminals/1) using 
-  
-```bash
-connexion run --mock=all openapi.yaml
-```
-  
-----
-
-## API Mocking
-
-API mocking is important to provide feedback to users during the design
-phase.
-
-Using connexion --mock=all we allow our consumer (clients) to test
-our API design so that we can get feedback and improve before spending
-time in the actual development.
-
-Connexion can mock either all methods or only unimplemented methods.
-
-----
-
-`Stoplight Prism` is another framework for mocking APIs.
-
-Prism generates fake data on every response according to the examples
-provided in the OAS spec.
-
-See [Prism guide](https://github.com/stoplightio/prism/blob/master/docs/guides/01-mocking.md#Response-Generation)
-  
-Exercise: run prism on your openapi.yaml using docker
-
-```bash
-docker run --rm -v $PWD:/code stoplight/prism mock /code/openapi.yaml
-```
-
-Now use the [terminal](/terminal/1) to issue some request.
-
-  
----
-
-## Implementing the API
-
-Implementing an API PoC is very useful for testing the specification.
-
-Python is a convenient language for prototyping and mocking:
-let's see how we can use it to 
- bind the spec to a real `maximum` function
- via the `operationId` OAS property.
-
-```yaml
-...
-paths:
-  /maximum:
-    post:
-      operationId: api.get_maximum
-...
-```
-
-----
-
-Now implement the `get_maximum()` function using TDD:
-
-- implement `maximum`
-- implement `test_get_maximum`
-- implement `get_maximum`
-- test them:
-
-```bash
-pytest -v api.py
-```
-
-----
-
-Now run your API [in a terminal](/terminals/1)
-
-```bash
-connexion run openapi.yaml --port 9990 --debug
-```
-
-And issue some requests using the cell below.
-
-```python
-from requests import request
-url = "http://localhost:5000/maximum"
-data = {"numbers": [1,2,3,4,5]}
-r = request("POST", url,  json=data)
-r.json()
-```
-
-----
-
-[connexion] and [prism] mock the server
-
-other OAS tools like [schemathesis] can mock client and generate test requests
-
-```bash
-schemathesis  run http://0.0.0.0:9990/openapi.yaml -c all
-```
-
-Schemathesis helps us in refining schemas *after the first implementation*.
-
----
-
-# API Design Workshop
-
-Now we will 
-
-[//]: #  (Riferimenti)
-
-[connexion]: https://github.com/zalando/connexion
-[spectral]: https://github.com/stoplight/spectral
-[prism]: https://github.com/stoplight/prism
