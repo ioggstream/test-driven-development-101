@@ -1,3 +1,12 @@
+---
+name: Custom issue template
+about: Describe this issue template's purpose here.
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 This is the issue template for this project.
 
 ## Reproduce
@@ -20,5 +29,3 @@ What happens instead?
 
 Further notes you want to attach
 and links to related issues.
-
-
