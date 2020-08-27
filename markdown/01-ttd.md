@@ -10,6 +10,7 @@ cd ex-01
 ## Goal
 
   - Understand the rationale of TDD
+  - Static analysis & linting
 
 ---
 
@@ -219,7 +220,7 @@ on [test_minimal.py](/edit/notebooks/ex-01/test_minimal.py).
 pytest --cov-report term-missing test_minimal.py
 ```
 
-Mumble: Are uncovered parts?
+Mumble: Are there uncovered parts?
 
 ----
 
