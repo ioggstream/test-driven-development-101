@@ -60,7 +60,7 @@ This is true for every single package/software we are writing!
 The goals of this process is to:
 
 - version all your builds and dependencies
-- create reproducibile builds
+- create reproducible builds
 - describe the package or application deployments and requirements (databases, infrastructure, configuration, ..)
 - standardise the building steps
 
@@ -98,7 +98,9 @@ While maven is tied to a specific language, in the recent years more tools have 
 
 The install phase which includes integration tests usually needed to spin up other machine or deploy packages on a testing environment, and drive all thos tasks from a java configuration file is very difficult.
 
-To support more languages and strip off the maven configuration files those steps, newer tools emerged. The first one was jenkins; then other both in an on-premise environment or in cloud come out, eg. like gitlab-ci, circle-ci and github-actions.
+To support more languages and strip off the maven configuration files
+those steps, newer tools emerged. The first one was jenkins;
+then other both in an on-premise environment or in cloud come out, eg. like gitlab-ci, circle-ci and github-actions.
 
 ----
 
@@ -155,7 +157,7 @@ This give rise to continuous integration (CI):
  the practice of merging all developers' working copies to a 
  shared mainline several times a day.
 
-To succesfully merge working copies in an efficient way,
+To successfully merge working copies in an efficient way,
  we need a strategy to continuously test 
  that the changes won't break the product.
 
