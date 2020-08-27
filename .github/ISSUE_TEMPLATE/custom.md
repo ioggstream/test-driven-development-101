@@ -29,5 +29,3 @@ What happens instead?
 
 Further notes you want to attach
 and links to related issues.
-
-
