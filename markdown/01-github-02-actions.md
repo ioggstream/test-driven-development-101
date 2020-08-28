@@ -82,11 +82,12 @@ Once you have created the new project, you want to use a github action to
 ensure code quality - eg validate yaml syntax.
 
 We will add [this yaml file](https://github.com/ioggstream/python-api-test/blob/master/.github/workflows/yamllint.yml)
-to the repo, thus triggering the action.
+to your repo [.github/workflows] directory, thus triggering the action.
 
 Finally we will see the running workflow.
 
 ----
+
 ## Add a github action
 
 The first thing to do is to:
@@ -160,11 +161,11 @@ Read the [yamllint configuration instruction](https://yamllint.readthedocs.io/en
 Hint: 
 
 - add the  `.yamllint` file to the repository.
-- always create a pull request
+- always create a pull request and check the pipeline result
 
 ---
 
-# Publishing actions
+# Publishing actions [TODO]
 
 Write and publish your actions via *code*
 

@@ -26,4 +26,8 @@ The steps will be:
  
  The minimal QA framework we'll setup consists in:
  
- - validating OAS with spectral
+ - validating OAS using Spectral
+ - checking YAML files using yamllint
+ - readme, license file, template for issues, PR
+
+----

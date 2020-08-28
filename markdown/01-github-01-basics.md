@@ -51,10 +51,28 @@ Further info on github templates are [here](https://docs.github.com/en/github/bu
 Exercise:
 
 - create an issue in this project
-- clone this project and create a PR adding your name to the CONTRIBUTORS
- file.
+- clone this project
+- create a PR adding your name to the CONTRIBUTORS file.
   
----
+----
+
+Always use this workflow when working on git
+
+```mermaid
+
+graph LR
+    issue --> branch
+    branch --> code
+    code --> pull[pull request]
+    pull --> ci
+    ci -->|ok| merge
+    ci -->|ko| code
+    merge -->|close| issue
+    
+```
+
+----
+
 
 Now follow to [01-github-02-actions.md]
 
