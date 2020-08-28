@@ -39,6 +39,12 @@ Traditionally, after the user requirements are gathered, SDL includes the follow
 - update
 - distribute
 
+```mermaid
+
+graph LR
+  build --> test --> update --> distribute
+
+```
 ----
 
 ## Build
