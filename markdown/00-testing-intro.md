@@ -45,11 +45,35 @@ graph LR
   build --> test --> update --> distribute
 
 ```
+
+----
+
+When using agile methodologies, user requirements can be summarized in task
+or issues.
+
+Automation technologies allow to continuously iterate the above steps
+using the below workflow.
+
+```mermaid
+
+graph LR
+    issue --> branch
+    branch --> code
+    code --> pull[pull request]
+    pull --> validation
+    validation -->|ok| merge
+    validation -->|ko| code
+    merge -->|close| issue
+    
+```
+
+
 ----
 
 ## Build
 
-Building software is not just assembling a bunch of code, but is like building a home: select bricks, prepare the ground, put the roof...
+Building software is not just assembling a bunch of code, 
+but is like building a home: select bricks, prepare the ground, put the roof...
 
 The building steps can be:
 
@@ -118,13 +142,16 @@ Newer and more diverse environment working with different languages may use diff
 
 - maven, distutils or other packaging tool for the actual assembly of the
  project (pom.xml, pyproject.toml, package.json, Makefile, ...)
-- one or more CI configuration file (eg. circleci.yaml, travis.yml, jenkins-job.xml, ..) where each yaml file can run  one or more different jobs (eg. linting, static analysis, compile, document generation,..)
+- one or more CI configuration file 
+  (eg. circleci.yaml, travis.yml, jenkins-job.xml, ..) where each yaml file
+  can run  one or more different jobs (eg. linting, static analysis, compile,
+  document generation,..)
 
 ----
 
 ## Tools
 
-In this course we will focus on two project management tool:
+In this course we will show  two project management tool:
  `tox` for python, `maven` for java.
  
 Maven accomplishes its goals via different plugins (eg. junit, sonarqube).
@@ -153,8 +180,8 @@ Does the software:
 
 ## Ensuring software quality
 
-Old develompent model were based on long cycles where
-issues were discovered too late.
+Old development model were based on long cycles where
+problems were discovered too late.
 
 Technological improvements allowed to shorten development phases
 and lowered the QA costs.
@@ -180,6 +207,21 @@ TDD advocates  the repetition of a very short development cycle:
 
 This strategy ensures that every change meet the quality requirements,
 and does not introduce regressions.
+
+```mermaid
+graph LR
+
+    requirements --> i1[issue 1]
+    requirements --> i2[issue 2]
+    requirements --> i3[..]
+    i1 --> tests[write tests]
+    tests --> ko[run failure test]
+    tests --> ok[success]
+    ko --> code
+    ok --> i2
+    i2 --> tests
+
+```
 
 ----
 
