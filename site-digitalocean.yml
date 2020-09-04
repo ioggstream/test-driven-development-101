@@ -36,7 +36,7 @@
 
   - name: Dynamically add the new servers to the inventory.
     add_host:
-      hostname: >
+      hostname: >-
         {{ item.droplet.networks.v4[0].ip_address }}
       groups: do
       ansible_user: root
@@ -92,6 +92,10 @@
       dest: /root/test-driven-development-101
       version: master
 
+  - name: refresh package index
+    command: |
+      apt-get -dy update
+
   - name: install deps
     package:
       name:
@@ -101,21 +105,30 @@
       - libxml2-utils
       - maven
       - tree
+      - python3-pip
+      - mysql-client
 
   - name: basic python packages
     pip:
       name:
       - jupyter
+      - jupyterlab
       - pytest
       - black
       - isort
       - yamllint
+      - git+https://github.com/ioggstream/notedown.git#master
+      - astor
+
+  - name: Allow traffic on 8888
+    command: |-
+      ufw allow 8888
 
   - name: Make it
     shell: |
       make course
     args:
-     chdir: /root/python-course/test-driven-development-101
+     chdir: /root/test-driven-development-101
     register: output
 
   - debug:

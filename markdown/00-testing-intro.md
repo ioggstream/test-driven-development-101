@@ -21,6 +21,17 @@
   - java and/or python development
   - maven
   
+## Forewords
+
+In this course we will present some theoretical introduction to 
+software testing
+and various tools - both software and online platforms - that are useful for
+ ensuring software quality.
+
+This includes docker containers, github & co.
+
+Audience assessment.
+
 ---
 
 # Software development lifecycle
