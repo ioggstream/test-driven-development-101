@@ -86,6 +86,9 @@ Now I just have to start coding until the test works.
 Writing tests helps the developer to *think* about **how using the function**
 and being in the shoes of the function user.
 
+Testing helps to identify produced data and eventual remnants like log
+ files, temporary files, ...
+
 This improves design significantly!
 
 ---

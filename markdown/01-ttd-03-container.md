@@ -58,12 +58,28 @@ A traditional shared test environment required:
 
 ----
 
-A local environment instead required:
+A local environment once required:
 
   - creating greedy VM on your machine, already stressed with the IDE
    & productivity tools
   - setting up a bridged or vlan network
   - usually, learn how to manage a DBMS
+
+```mermaid
+
+flowchart LR
+    Proxy --> App
+    subgraph fe-net
+    Proxy
+    end
+    subgraph be-net
+    App[[Application]] --> DB
+    App --> FS
+    DB[(DB)]
+    FS[Files]
+    end
+
+```
 
 ---
 
@@ -95,14 +111,26 @@ filesystem and ip address.
 
 ```bash
 # the --rm flag removes the container at exit
-docker run --rm -ti busybox  
+docker run --rm -i busybox  ip address
 ```
-----
 
 Exercise:
 
 - using `man docker` or the online documentation, explain the meanings of the
  flags we have passed to `docker` in the above command.
+
+
+----
+
+Run the following command in the terminal [terminal](/terminals/1) to
+ enter a new container with a shell
+ 
+```bash
+docker run --rm -t -i busybox
+```
+
+Exercise:
+
 - list the running processes with `ps -ef`, note that by default
   the busybox image ran a shell as the first process
 - use `ip -4 -o a` to show the container ip address
@@ -115,7 +143,8 @@ Exercise:
 
 ### Pre-built images
 
-You can download and run a pre-built image of an operating system via
+You can download and run a pre-built image of an operating system 
+in the terminal [terminal](/terminals/1) via
 
 ```bash
 docker run --rm -ti ubuntu:20.04
@@ -146,8 +175,7 @@ Let's run a mysql instance in background
 ```bash
 # Run mysql on port 3306 of the local machine,
 #  and pass an argument via an environment variable `-e`
-docker run --name mysql-server --rm -d -p 3306:3306 -e
- MYSQL_RANDOM_ROOT_PASSWORD=true mysql
+docker run --name mysql-server --rm -d -p 3306:3306 -eMYSQL_RANDOM_ROOT_PASSWORD=true mysql
 ```
 
 Exercise:
@@ -162,7 +190,59 @@ Exercise:
 ```sql
 SELECT  1 + 1;
 SHOW DATABASES;
+// shutdown the mysql server with
+SHUTDOWN;
 ```
 
 
+---
+
+## Infrastructure as code with Docker
+
+The `docker-compose` tool is an executable that orchestrates on our
+laptop the creation of multiple containers.
+
+To setup an infrastructure like this one
+
+```mermaid
+
+flowchart LR
+    Proxy --> App
+    subgraph fe-net
+    Proxy
+    end
+    subgraph be-net
+    App[[Application]] --> DB
+    App --> FS
+    DB[(DB)]
+    FS[Files]
+    end
+
+```
+
+we can write a docker-compose.yaml file
+
+```yaml
+version: "3.3"
+services:
+  proxy:
+    image: nginx
+    links:
+    - api
+  api:
+    image: python
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    links:
+    - db
+    volumes:
+    - filestore:/var/lib/store
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+volumes:
+  filestore:    
+
+```
 
