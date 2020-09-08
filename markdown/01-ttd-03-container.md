@@ -220,29 +220,90 @@ flowchart LR
 
 ```
 
-we can write a docker-compose.yaml file
+we can write a docker-compose.yaml file that sets up the above infrastructure
+using containers.
+
+```load docker-compose.yml
+```
+
+----
+
+A compose file is made of different sections:
 
 ```yaml
 version: "3.3"
+# Optional parts declaring networks and volumes
+volumes:
+  filestore:    
+networks:
+  fe:
+  be:
+...
+```
+----
+
+Discuss the services...
+
+```yaml
+# Sections declaring services
 services:
   proxy:
     image: nginx
-    links:
-    - api
+    ...
   api:
-    image: python
-    environment:
-      MYSQL_ROOT_PASSWORD: secret
-    links:
-    - db
-    volumes:
-    - filestore:/var/lib/store
+    image: python:3.8-alpine
+    ...
+    command: [python, -mhttp.server]
   db:
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: secret
-volumes:
-  filestore:    
-
 ```
 
+----
+
+Now spin the above infrastructure up!
+
+```bash
+docker-compose up -d
+# and check if everything is fine with
+docker-compose ps
+```
+
+From a [terminal](/terminals/1) enter on the `api` container 
+
+```bash
+docker exec -ti ex-01_api_1 bash
+# then ping the other containers
+ping -t1 db
+ping -t1 proxy
+```
+
+----
+
+
+The `--scale` option can spin multiple containers of a type
+```bash
+# Run 
+docker-compose up -d --scale proxy=3
+``` 
+
+thus creating this setup
+
+```mermaid
+flowchart LR
+    Proxy-->App
+    Proxy2-->App
+    Proxy3-->App
+    subgraph fe-net
+    Proxy[Proxy] 
+    Proxy2[Proxy] 
+    Proxy3[Proxy]
+    end
+    subgraph be-net
+    App[[Application]] --> DB
+    App --> FS
+    DB[(DB)]
+    FS[Files]
+    end
+```

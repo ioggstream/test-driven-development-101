@@ -1,0 +1,30 @@
+version: "3.3"
+services:
+  proxy:
+    image: nginx
+    links:
+    - api
+    networks: [ fe ]
+  api:
+    image: python:3.8-alpine
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    links:
+    - db
+    volumes:
+    - filestore:/var/lib/store
+    command:
+    - python3
+    - -mhttp.server
+    networks: [fe, be]
+  db:
+    networks: [be]
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+volumes:
+  filestore:
+networks:
+  fe:
+  be:
+
