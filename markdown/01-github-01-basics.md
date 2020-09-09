@@ -40,7 +40,7 @@ stores issues and PR templates in [.github](.github).
 Here you can find
 
 ```bash
-tree ../../.github
+tree ../.github
 ```
 
 - an [issue template](https://github.com/ioggstream/test-driven-development-101/blob/master/.github/ISSUE_TEMPLATE/custom.md)

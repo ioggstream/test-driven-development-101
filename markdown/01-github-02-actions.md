@@ -1,5 +1,6 @@
 # Github actions
 
+![Logo from github.com](https://raw.githubusercontent.com/github/explore/2c7e603b797535e5ad8b4beb575ab3b7354666e1/topics/actions/actions.png)
 ---
 
 ## Goals
@@ -27,6 +28,21 @@ Contain build context information and the set of commands to be executed
 
 You can check logs and eventually produce artifacts.
 
+```mermaid
+flowchart LR
+    subgraph three[Continuous Integration Platform]
+     server-->build-->test-->status{status}-->|result|server
+    end
+    subgraph two[github.com]
+        b1[(repo)]-->|2.event|server[[servers]]
+    end
+    subgraph Users
+        a1[dev] & a2[manager]
+    end
+    a1 -->|1.push| b1
+    server -->|3.notify| Users
+    
+```
 ----
 
 written in javascript (faster, less customizable) or docker
