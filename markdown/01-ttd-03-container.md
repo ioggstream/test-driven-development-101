@@ -223,7 +223,8 @@ flowchart LR
 we can write a docker-compose.yaml file that sets up the above infrastructure
 using containers.
 
-```load docker-compose.yml
+```
+%load docker-compose.yml
 ```
 
 ----
@@ -306,4 +307,14 @@ flowchart LR
     DB[(DB)]
     FS[Files]
     end
+```
+
+----
+
+Now remove this docker-compose infrastructure via
+
+```bash
+docker-compose down
+# and ensure everything is clean
+docker-compose ps
 ```

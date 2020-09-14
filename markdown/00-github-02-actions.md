@@ -122,7 +122,8 @@ Then you can add the action:
   - commit to a branch referencing the issue id (eg. `1-add-yamllint`)
   - create a pull request (this should reflect the template too)
 
-  
+----
+
 The action code is here
 
 ```yaml

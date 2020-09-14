@@ -181,11 +181,13 @@ connexion run --strict-validation openapi.yaml
 
 # API Design Workshop
 
-Now we will 
+Now we will design an API from scratch using the [python-api-test] repo
 
 [//]: #  (Riferimenti)
 
+[python-api-test]: https://github.com/ioggstream/python-api-test
 [schemathesis]: https://github.com/kiwicom/schemathesis
 [connexion]: https://github.com/zalando/connexion
 [spectral]: https://github.com/stoplight/spectral
 [prism]: https://github.com/stoplight/prism
+[api-oas-checker]: https://teamdigitale.github.io/api-oas-checker
