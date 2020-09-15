@@ -13,7 +13,7 @@ EXTERNAL_COURSES =
 
 course: .prepare .EXPORT_ALL_VARIABLES
 	bash -x build.sh
-	jupyter lab --ip=$(shell curl ifconfig.me) --allow-root
+	jupyter lab --ip=$(shell curl ifconfig.me) --allow-root --port 8888 &
 
 clean:
 	rm *.pyc __pycache__ -fr
