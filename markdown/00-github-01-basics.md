@@ -19,8 +19,24 @@
 # Preparation
 
   - register on github
-  - fork https://github.com/ioggstream/test-driven-development and repo
+  - fork https://github.com/ioggstream/test-driven-development-101 and repo
    presentation
+
+----
+
+## Create an ssh key for github
+
+```bash
+ssh-keygen -o -a 100 -t ed25519 -f /tmp/id_deleteme; # man ssh-keygen  
+ls -la /tmp/id_deleteme*
+```
+
+Now clone a git repo using the new key
+
+```bash
+export GIT_SSH_COMMAND='ssh -i /tmp/id_deleteme'
+git clone git@github.com:caldav4j/caldav4j
+```
 
 ---
 
@@ -34,7 +50,7 @@ When you create a project you need to provide QA metadata
   
 ----
 
-[This project](https://github.com/ioggstream/test-driven-development)
+[This project](https://github.com/ioggstream/test-driven-development-101)
 stores issues and PR templates in [.github](.github).
 
 Here you can find
