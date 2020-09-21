@@ -90,5 +90,5 @@ graph LR
 ----
 
 
-Now follow to [01-github-02-actions.md]
+Now follow to [01-github-02-actions.md](/notebooks/notebooks/00-github-02-actions.md.ipynb)
 
