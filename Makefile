@@ -13,7 +13,7 @@ EXTERNAL_COURSES =
 
 course: .prepare .EXPORT_ALL_VARIABLES
 	bash -x build.sh
-	nohup jupyter lab --ip=$(shell curl ifconfig.me) --allow-root --port 8888 &
+	nohup jupyter lab --ip=$(shell curl ifconfig.me) --allow-root --port 8888 > /tmp/nohup.out &
 
 clean:
 	rm *.pyc __pycache__ -fr
