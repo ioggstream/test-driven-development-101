@@ -2,14 +2,14 @@ version: "3.3"
 services:
   proxy:
     image: nginx
-    links:
+    depends_on:
     - api
     networks: [ fe ]
   api:
     image: python:3.8-alpine
     environment:
       MYSQL_ROOT_PASSWORD: secret
-    links:
+    depends_on:
     - db
     volumes:
     - filestore:/var/lib/store
