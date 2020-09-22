@@ -7,5 +7,5 @@ set -x
 rsync -var python/* notebooks/
 rsync -var markdown/images notebooks/
 
-find notebooks/ -name \*.py -a ! -path '*/.tox/*' -type f  -exec python strip_solutions.py --replace=true {} \;
+find notebooks/ -name \*.py -a ! -path '*/.tox/*' -type f  -exec python3 strip_solutions.py --replace=true {} \;
 
