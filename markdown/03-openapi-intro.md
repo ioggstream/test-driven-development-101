@@ -139,7 +139,6 @@ components:
       properties:
         given_name:
           type: string
-          required: true
           example: Leon Battista
         family_name:
           type: string
@@ -152,7 +151,8 @@ components:
 
 ----
 
-Esercise: define the `ISOTimestamp` schema to represent the following object
+Esercise: define the `ISOTimestamp` schema object to represent the following
+ object
 
 ```json
 {"timestamp":  "2020-01-01T00:00:00Z"}
@@ -251,6 +251,7 @@ Practice:
 - open a [terminal](/terminals/1) and run a mock API server
 
 ```bash
+python3 -mpip install connexion connexion[swagger-editor]
 connexion run datetime.yaml --mock=all & 
 ```
 

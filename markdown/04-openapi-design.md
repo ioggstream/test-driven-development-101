@@ -2,7 +2,7 @@
 # OAS Design
 
 ```python
-cd python/ex-04
+cd ex-04
 ```
 ----
 
@@ -148,11 +148,49 @@ r.json()
 
 ----
 
-tools like [connexion] and [prism] mock the server
+---
+
+# Dynamic analysis
+
+We have already introduced Static analysis, which is useful
+to check if the code we wrote is syntactically correct or
+if it presents some bad patterns.
+
+Dynamic analysis goes a little further and tests the actual
+behavior of an application. We can apply this kind of analysis
+directly to an API, or we can do it to a complete infrastructure,
+eg. to a reverse proxy which may be used to implement features
+such as caching, rate-limiting or L7 firewalling.
+
+While in this course we are running Dynamic analysis (aka DAST)
+after the development of an application, it is important that
+we implement the actual tests beforehand.
+
+There are many tools for DAST: in this course
+we will see:
+
+- [schemathesis] which is both a stress tool
+  and a library that can be used to programmatically
+  write tests;
+- [zap-proxy] a tool from OWASP, a cybersecurity foundation, which
+  will scan our API using the information provided by its OAS.
+
+The usability of those tools is deeply related to the availability
+of the OpenAPI specification: once more we remember the importance
+of a contract-firts approach in writing APIs.
+
+## Schemathesis
+
+Tools like [connexion] and [prism] mock the server
 
 other OAS tools like [schemathesis] can mock client and generate test requests
 
-This helps refining schemas *after the first implementation*.
+This helps refining schemas *after the first implementation*
+and make them secure.
+
+The following command retrieves the OAS specification at a given
+URL and creates a bunch of requests, verifying whether the responses
+are in the allowed set.
 
 ```bash
 schemathesis run http://0.0.0.0:9990/openapi.yaml -c all
@@ -174,7 +212,32 @@ connexion run --strict-validation openapi.yaml
   specify array sizes, ...
 
 
- 
+## OWASP ZAP Proxy
+
+ZAP Proxy is a complete tool capable of performing various tests
+on web applications and APIs: see [zap-proxy-oas] for an introduction.
+
+To scan your implemented API with ZAP Proxy you need to either install it
+or run it via docker.
+The following command will analyze
+the API referenced by the given `openapi.json`
+using the `openapi` extension
+
+
+```
+docker run \
+  -v $PWD:/zap/wrk \
+  -w /zap/wrk \
+  owasp/zap2docker-weekly \
+  zap-api-scan.py \
+  -t https://api.example/datetime/v1/openapi.json \
+  -f openapi
+```
+
+The output will test many possible exploits and checks
+the presence of various headers.
+In many cases, you might want to adjust the provided headers
+using a reverse proxy or a cache (eg. haproxy, varnish, nginx).
  
 
 ---
@@ -191,3 +254,4 @@ Now we will design an API from scratch using the [python-api-test] repo
 [spectral]: https://github.com/stoplight/spectral
 [prism]: https://github.com/stoplight/prism
 [api-oas-checker]: https://teamdigitale.github.io/api-oas-checker
+[zap-proxy-oas]: https://www.zaproxy.org/blog/2017-06-19-scanning-apis-with-zap/
