@@ -7,7 +7,7 @@ SLIDES=$(addprefix ../slides/, $(addsuffix .slides.html, $(SOURCES)))
 
 
 ../slides/%.slides.html: ../notebooks/%.ipynb
-	jupyter nbconvert $<  --to slides --output $@
+	jupyter nbconvert  $<  --to slides --output $@
 
 
 nb: $(NB)

@@ -63,6 +63,7 @@ We can lint xml and yaml files using proper tools like `xmllint` and `yamllint`.
 Exercise: 
 
 - reformat the following code with xmllint
+- use xmllint to format the file in-place
 
 ```xml
 <a><b foo="bar"
